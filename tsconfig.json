@@ -6,7 +6,6 @@
     },
     "files": [
         "src/app.ts",
-        "src/lib.ts",
         "src/bootstrap.ts"
     ]
 }

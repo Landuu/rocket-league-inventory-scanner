@@ -9,7 +9,6 @@
 
     <!-- Assets -->
     <link rel='stylesheet' type='text/css' media='screen' href='dist/app.css'>
-    <script src='dist/lib.js'></script>
     <script src="dist/bootstrap.js" defer></script>
     <script src='dist/app.js' defer></script>
 </head>
@@ -21,20 +20,69 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div id="containerFile" class="container mt-5">
         <div class="row">
             <div class="col-6 offset-3">
                 <div class="mb-3 text-center">
                     <label for="formFile" class="form-label">Choose file containing your inventory (.json)</label> 
                     <a href="#">How to get this file</a>
-                    <input class="form-control" type="file" id="formFile" accept=".json">
+                    <input class="form-control" type="file" id="initFile" accept=".json">
                 </div>
                 <div class="d-grid">
-                    <button class="btn btn-primary" type="button">Check item pricing</button>
+                    <button id="initSubmit" class="btn btn-primary" type="button">Check item pricing</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="containerLoadSpinner" class="container mt-5 d-none">
+        <div class="row">
+            <div class="col text-center">
+                <h3>Parsing data...</h2>
+                <div class="spinner-border text-primary mt-3" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="containerSelection" class="container mt-5 d-none">
+        <div class="row">
+            <div class="col">
+                <h4>Item type:</h4>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="itemTypeRadio" id="itemTypeRadio0" checked>
+                    <label class="form-check-label" for="itemTypeRadio0">Items</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="itemTypeRadio" id="itemTypeRadio1">
+                    <label class="form-check-label" for="itemTypeRadio1">Blueprints</label>
+                </div>
+            </div>
+            <div class="col">
+                <h4>Quality of item:</h4>
+                <select id="qualitySelect" class="form-select form-select mb-3" aria-label=".form-select-lg example">
+                    <template id="templateQualityOption">
+                        <option value="">Default</option>
+                    </template>
+                </select>
+            </div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center;">
+                <button class="btn btn-primary p-3" type="button">Check pricing</button>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <div class="containerPricing">
+        <div class="row">
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+
+    
 </body>
 
 </html>
