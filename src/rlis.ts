@@ -31,6 +31,10 @@ export class RLIS {
         fileReader.readAsText(file);
     }
 
+    public getInventory() :Inventory {
+        return this.inventory;
+    }
+
     //
     // Private
     //
@@ -47,10 +51,9 @@ export class RLIS {
                 this.populateBlueprint(item);
         }
 
-        EventManager.emitEventWithData(EventManager.types.data_inventory, {detail: this.inventory});
         setTimeout(() => {
             EventManager.emitEvent(EventManager.types.interface_load_end);
-        }, 20);
+        }, 2000);
     }
 
     private populateItem(item :any) :void {

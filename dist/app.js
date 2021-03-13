@@ -23,7 +23,14 @@ Object.defineProperty(exports, "__esModule", ({
 var rlis_1 = __webpack_require__(/*! ./rlis */ "./src/rlis.ts");
 
 var rlis = new rlis_1.RLIS();
-var inventory; //
+var Item_T;
+
+(function (Item_T) {
+  Item_T[Item_T["Item"] = 0] = "Item";
+  Item_T[Item_T["Blueprint"] = 1] = "Blueprint";
+})(Item_T || (Item_T = {}));
+
+; //
 // Random class
 //
 
@@ -69,14 +76,7 @@ var Interface = /*#__PURE__*/function () {
     key: "initializeForm",
     value: function initializeForm() {
       // Populate quality select with options
-      var Item_T;
-
-      (function (Item_T) {
-        Item_T[Item_T["Item"] = 0] = "Item";
-        Item_T[Item_T["Blueprint"] = 1] = "Blueprint";
-      })(Item_T || (Item_T = {}));
-
-      ;
+      var inventory = rlis.getInventory();
       var item_type = this.el.selection.item_type_item.checked ? Item_T.Item : Item_T.Blueprint;
       var selection = this.el.selection.quality_select;
       var option_template = this.el.selection.templates.quality_option;
@@ -94,7 +94,37 @@ var Interface = /*#__PURE__*/function () {
     }
   }, {
     key: "showPricing",
-    value: function showPricing() {}
+    value: function showPricing() {
+      var inventory = rlis.getInventory();
+      var selection = this.el.selection.quality_select;
+      var table_body = this.el.pricing.table_body;
+      var table_row_template = this.el.pricing.templates.table_row;
+      var table_row_template_root = table_row_template.root;
+      var item_type = this.el.selection.item_type_item.checked ? Item_T.Item : Item_T.Blueprint;
+      var option_selected = selection.value;
+      var local_inventory = item_type ? inventory.blueprints[option_selected] : inventory.items[option_selected];
+      table_body.innerHTML = "";
+
+      for (var i = 0; i < local_inventory.length; i++) {
+        var item = local_inventory[i];
+        var row_temp = table_row_template_root.content.cloneNode(true);
+        var el_id = row_temp.querySelector(table_row_template.elementsId.id);
+        var el_name = row_temp.querySelector(table_row_template.elementsId.name);
+        var el_paint = row_temp.querySelector(table_row_template.elementsId.paint);
+        var el_certificate = row_temp.querySelector(table_row_template.elementsId.certificate);
+        var el_amount = row_temp.querySelector(table_row_template.elementsId.amount);
+        var el_value = row_temp.querySelector(table_row_template.elementsId.value);
+        el_id.innerHTML = i + 1;
+        el_name.innerHTML = item.name;
+        el_paint.innerHTML = item.paint;
+        el_certificate.innerHTML = item.certificate;
+        el_amount.innerHTML = item.amount;
+        el_value.innerHTML = Random.getInclusiveInt(10, 1000);
+        table_body.appendChild(row_temp);
+      }
+
+      Interface.setVisibility(this.el.pricing.container, true);
+    }
   }]);
 
   return Interface;
@@ -114,8 +144,26 @@ Interface.el = {
     quality_select: document.getElementById("qualitySelect"),
     item_type_item: document.getElementById("itemTypeRadio0"),
     item_type_blueprint: document.getElementById("itemTypeRadio1"),
+    submit: document.getElementById("filterSubmit"),
     templates: {
       quality_option: document.getElementById("templateQualityOption")
+    }
+  },
+  pricing: {
+    container: document.getElementById("containerPricing"),
+    table_body: document.getElementById("pricingTableBody"),
+    templates: {
+      table_row: {
+        root: document.getElementById("templatePricingTableRow"),
+        elementsId: {
+          id: "#ptr_id",
+          name: "#ptr_name",
+          paint: "#ptr_paint",
+          certificate: "#ptr_certificate",
+          amount: "#ptr_amount",
+          value: "#ptr_value"
+        }
+      }
     }
   }
 }; //
@@ -138,9 +186,8 @@ Interface.el.selection.item_type_item.addEventListener("change", function () {
 Interface.el.selection.item_type_blueprint.addEventListener("change", function () {
   Interface.initializeForm();
 });
-document.addEventListener("data_inventory", function (e) {
-  var inv = e.detail;
-  inventory = inv;
+Interface.el.selection.submit.addEventListener("click", function () {
+  Interface.showPricing();
 });
 document.addEventListener("interface_load_start", function () {
   Interface.setVisibility(Interface.el.init.container, false);
@@ -215,6 +262,11 @@ var RLIS = /*#__PURE__*/function () {
       };
 
       fileReader.readAsText(file);
+    }
+  }, {
+    key: "getInventory",
+    value: function getInventory() {
+      return this.inventory;
     } //
     // Private
     //
@@ -230,12 +282,9 @@ var RLIS = /*#__PURE__*/function () {
         if (item.blueprint_cost == 0) this.populateItem(item);else this.populateBlueprint(item);
       }
 
-      EventManager.emitEventWithData(EventManager.types.data_inventory, {
-        detail: this.inventory
-      });
       setTimeout(function () {
         EventManager.emitEvent(EventManager.types.interface_load_end);
-      }, 20);
+      }, 2000);
     }
   }, {
     key: "populateItem",

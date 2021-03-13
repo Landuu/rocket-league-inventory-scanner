@@ -68,16 +68,40 @@
                 </select>
             </div>
             <div class="col" style="display: flex; justify-content: center; align-items: center;">
-                <button class="btn btn-primary p-3" type="button">Check pricing</button>
+                <button id="filterSubmit" class="btn btn-primary p-3" type="button">Check pricing</button>
             </div>
         </div>
         <hr>
     </div>
 
-    <div class="containerPricing">
+    <div id="containerPricing" class="container mt-3 mb-5 d-none">
         <div class="row">
-            <div class="col">
-
+            <div class="col-12">
+                <table class="table table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item name</th>
+                            <th>Amount</th>
+                            <th>Paint</th>
+                            <th>Certificate</th>
+                            <th>Value per item</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pricingTableBody">
+                        <template id="templatePricingTableRow">
+                            <tr>
+                                <th id="ptr_id"></th>
+                                <td id="ptr_name"></td>
+                                <td id="ptr_amount"></td>
+                                <td id="ptr_paint"></td>
+                                <td id="ptr_certificate"></td>
+                                <td id="ptr_value"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                    
+                </table>
             </div>
         </div>
     </div>
