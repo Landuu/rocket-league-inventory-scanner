@@ -1,14 +1,29 @@
 <script lang="ts">
+	import { RLIS } from './libs/rlis';
+	import { setContext } from 'svelte';
 	import Router from 'svelte-spa-router'
 
 	import Home from './routes/Home.svelte';
+	import Loading from './routes/Loading.svelte';
+	import Items from './routes/Items.svelte';
 	import NotFound from './routes/NotFound.svelte';
 
 	const routes =  {
 		'/': Home,
+		'/loading': Loading,
+		'/items': Items,
 
 		'*': NotFound
 	}
+
+	const rlis = new RLIS();
+	setContext('rlis', rlis);
+	
+
+	setTimeout(() => {
+		console.log(rlis.getInventory());
+	}, 10000);
+	
 </script>
 
 <Router {routes}/>
@@ -34,6 +49,7 @@
 	@import "../node_modules/bootstrap/scss/images";
 	@import "../node_modules/bootstrap/scss/buttons";
 	@import "../node_modules/bootstrap/scss/forms";
+	@import "../node_modules/bootstrap/scss/spinners";
 
 	.flex-center {
 		display: flex;
