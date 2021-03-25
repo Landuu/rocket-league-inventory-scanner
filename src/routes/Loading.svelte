@@ -1,6 +1,6 @@
 <script lang="ts">
     import { U } from '../libs/utils';
-    setTimeout(() => { U.redirect("/items") }, U.getRandomInt(2, 4));
+    setTimeout(() => { U.redirect("/items") }, U.getRandomInt(1500, 4000));
 </script>
 
 <div class="container mt-5">

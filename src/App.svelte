@@ -18,12 +18,6 @@
 
 	const rlis = new RLIS();
 	setContext('rlis', rlis);
-	
-
-	setTimeout(() => {
-		console.log(rlis.getInventory());
-	}, 10000);
-	
 </script>
 
 <Router {routes}/>
