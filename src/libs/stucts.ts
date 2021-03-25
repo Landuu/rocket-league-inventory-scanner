@@ -18,8 +18,8 @@ export interface Blueprint extends Item {
 }
 
 export class ItemContainer {
-    public uncommon :Item[] = [];
     public common :Item[] = [];
+    public uncommon :Item[] = [];
     public rare :Item[] = [];
     public veryrare :Item[] = [];
     public import :Item[] = [];
@@ -29,8 +29,8 @@ export class ItemContainer {
 }
 
 export class BlueprintContainer {
-    public uncommon :Blueprint[] = [];
     public common :Blueprint[] = [];
+    public uncommon :Blueprint[] = [];
     public rare :Blueprint[] = [];
     public veryrare :Blueprint[] = [];
     public import :Blueprint[] = [];

@@ -34,11 +34,11 @@
 
 
 	// Custom variable overrides
-	$body-bg: #2e2e2e;
-	$body-color: #e7e7e7;
-	$theme-colors: (
-  		"primary": $cyan-700,
-	);
+	// $body-bg: #2e2e2e;
+	// $body-color: #e7e7e7;
+	// $theme-colors: (
+  	// 	"primary": $cyan-700,
+	// );
 
 	// Optional
 	@import "../node_modules/bootstrap/scss/root";
@@ -50,6 +50,11 @@
 	@import "../node_modules/bootstrap/scss/buttons";
 	@import "../node_modules/bootstrap/scss/forms";
 	@import "../node_modules/bootstrap/scss/spinners";
+	@import "../node_modules/bootstrap/scss/list-group";
+	@import "../node_modules/bootstrap/scss/transitions";
+	@import "../node_modules/bootstrap/scss/tables";
+	@import "../node_modules/bootstrap/scss/nav";
+
 
 	.flex-center {
 		display: flex;
